@@ -1,4 +1,3 @@
-
 d = {}
 with open("data.txt") as f:
     for line in f:
@@ -36,6 +35,17 @@ def c_num(bar):
     else:
         a = d2.get(bar)
         return 'The ' + str(bar) + ' bar requires ' + str(a) + ' coal per bar'
+
+
+
+
+
+
+#links for data:
+#http://services.runescape.com/m=itemdb_rs/results.ws      ore prices
+#http://services.runescape.com/m=itemdb_rs/results.ws      bar prices
+#http://services.runescape.com/m=itemdb_rs/results.ws      coal price
+#http://services.runescape.com/m=itemdb_rs/Nature_rune/viewitem.ws?obj=561      EXXTRA nature rune price
 
 
 
