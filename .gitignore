@@ -46,5 +46,8 @@ def c_num(bar):
 #http://services.runescape.com/m=itemdb_rs/results.ws     Just type in bar, ore and coal form the coresponding lists
 #http://services.runescape.com/m=itemdb_rs/Nature_rune/viewitem.ws?obj=561      EXXTRA nature rune price
 
+Calculation:
 
+Profit = bar price - (coal Price * amount of coal) + ore price [optional + nature rune price]
+XpGain = smelthing xp [optional + superheat cast xp , magic] 
 
