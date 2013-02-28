@@ -1,0 +1,41 @@
+
+d = {}
+with open("data.txt") as f:
+    for line in f:
+       (bar, val) = line.split()
+       d[bar] = int(val)
+
+d2 = {}
+with open("data2.txt") as f:
+    for line in f:
+       (bar, c_num) = line.split()
+       d2[bar] = int(c_num)
+
+def bar_l():
+    for key in d:
+        print key
+
+def bars(bar):
+    "gets the bar price info. Type format : bars('Iron') " 
+    a = ''
+    if bar not in d:
+        if bar == 'All':
+            print 'The list of all bar prices: '
+            print d
+        else:
+            print 'That type of bar does not exist, please try again'
+    else:
+        a = d.get(bar)
+        return 'The price of ' + str(bar) + ' bars are ' + str(a) + ' gold coins'
+        
+def c_num(bar):
+    "gets the oreamount of coal needed"
+    a = ''
+    if bar not in d2:
+        print 'That type of bar does not require coal, please try again'
+    else:
+        a = d2.get(bar)
+        return 'The ' + str(bar) + ' bar requires ' + str(a) + ' coal per bar'
+
+
+
