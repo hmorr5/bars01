@@ -1,5 +1,6 @@
 import urllib2
 import urllib
+import re
 
 d = {}
 with open("data.txt") as f:
@@ -13,11 +14,16 @@ with open("data2.txt") as f:
        (bar, c_num) = line.split()
        d2[bar] = int(c_num)
 
+def bar_l():
+    "gets the list of bars"
+    for key in d:
+        print key
+
 def bars(bar):
     "gets the bar price info. Type format : bars('Iron') " 
     a = ''
     if bar not in d:
-        print 'That type of bar does not exist, please try again'
+       print 'That type of bar does not exist, please try again'
     else:
         a = d.get(bar)
         return 'The price of ' + str(bar) + ' bars are ' + str(a) + ' gold coins'
@@ -32,25 +38,40 @@ def c_num(bar):
         return 'The ' + str(bar) + ' bar requires ' + str(a) + ' coal per bar'
 
 def finditemidsource(nameid):
+   """grabs source code"""
+   crudelist = []
+   clearstr = ""
+   lastitem = ""
+   cleartags = re.compile(r'<.*?>')
+   request = urllib2.Request("http://www.runelocus.com/tools/itemlist.html?name=" + nameid+"&search=Search")
+   response = urllib2.urlopen(request)
+   html = response.read()
+   startind = html.find("<tbody>")
+   endind = html.find("</tbody>")
+   iteminfo = html[startind:endind]
+   trlist = [n for n in xrange(len(iteminfo)) if iteminfo.find('<td>', n) == n]
+   tr_endlist = [n for n in xrange(len(iteminfo)) if iteminfo.find('</td>', n) == n]
+   for num,content in enumerate(trlist):
+      clearstr = cleartags.sub('',iteminfo[trlist[num]: tr_endlist[num]])
+      if clearstr == "":
+         a = cleartags.sub('',iteminfo[trlist[num-1]: tr_endlist[num-1]])
+         b = cleartags.sub('',iteminfo[trlist[num-2]: tr_endlist[num-2]])
+         if a != lastitem:
+            crudelist.append(a+","+b)
+         lastitem = cleartags.sub('',iteminfo[trlist[num-1]: tr_endlist[num-1]])      
+   print crudelist
+   if crudelist == []:
+      print "this item type/product does not excist"
+      
+def Webinfo(nameid, itemid):
     """grabs source code"""
-    request = urllib2.Request("http://www.runelocus.com/tools/itemlist.html?name=" + nameid+"&search=Search")
+    request = urllib2.Request("http://services.runescape.com/m=itemdb_rs/" + nameid + "/" +"viewitem.ws?obj="+ itemid)
     response = urllib2.urlopen(request)
     html = response.read()
     startind = html.find("<tbody>")
     endind = html.find("</tbody>")
     iteminfo = html[startind:endind]
     print iteminfo
-
-def Webinfo(nameid, itemid):
-    """grabs source code"""
-    request = urllib2.Request("http://services.runescape.com/m=itemdb_rs/" + nameid+ "/" +"viewitem.ws?obj="+ itemid)
-    response = urllib2.urlopen(request)
-    html = response.read()
-    startind = html.find("<td>")
-    endind = html.find("</td>")
-    iteminfo = html[startind:endind]
-    price = iteminfo[4:]
-    print price
 
 
 #links for data:
@@ -61,4 +82,3 @@ def Webinfo(nameid, itemid):
 
 #Profit = bar price - (coal Price * amount of coal) + ore price [optional + nature rune price]
 #XpGain = smelthing xp [optional + superheat cast xp , magic] 
-
