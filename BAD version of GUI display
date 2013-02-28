@@ -1,0 +1,83 @@
+# THIS SHITS BADD!!! not at all how we can do it, but i was dickigna round and it worked somewhat.
+#Basically just cahnges the label when you press teh button, the actualy version will have to be menu of some sort
+
+from Tkinter import *
+import math
+
+root = Tk()     
+top = Frame(root)
+top.pack(side='top')
+
+
+d = {}
+with open("data.txt") as f:
+    for line in f:
+       (bar, val) = line.split()
+       d[bar] = int(val)
+
+d2 = {}
+with open("data2.txt") as f:
+    for line in f:
+       (bar, c_num) = line.split()
+       d2[bar] = int(c_num)
+
+def bar_l():
+    for key in d:
+        print key
+
+def bars(bar):
+    "gets the bar price info. Type format : bars('Iron') " 
+    a = ''
+    if bar not in d:
+        if bar == 'All':
+            print 'The list of all bar prices: '
+            print d
+        else:
+            print 'That type of bar does not exist, please try again'
+    else:
+        a = d.get(bar)
+        return 'The price of ' + str(bar) + ' bars are ' + str(a) + ' gold coins'
+        
+def c_num(bar):
+    "gets the oreamount of coal needed"
+    a = ''
+    if bar not in d2:
+        print 'That type of bar does not require coal, please try again'
+    else:
+        a = d2.get(bar)
+        return 'The ' + str(bar) + ' bar requires ' + str(a) + ' coal per bar'
+
+s = StringVar()
+
+rframe = Frame(top)
+rframe.pack(side='top', padx=10, pady=20)
+
+
+r_entry = Label(rframe, textvariable=s)
+r_entry.pack(side='left')
+
+
+def comp_s(event=None):
+    global s
+    s.set(bars('Gold'))
+
+def comp_s1(event=None):
+    global s
+    s.set(bars('Iron'))
+
+r_entry.bind('<Return>', comp_s)
+
+compute = Button(rframe, text=' Gold ', command=comp_s)
+compute.pack(side='left')
+
+compute1 = Button(rframe, text=' Iron ', command=comp_s1)
+compute1.pack(side='left')
+
+def quit(event=None):
+    root.destroy()
+quit_button = Button(top, text='Goodbye, GUI World!', command=quit,
+                     background='yellow', foreground='blue')
+quit_button.pack(side='top', pady=5, fill='x')
+root.bind('<q>', quit)
+
+root.mainloop()
