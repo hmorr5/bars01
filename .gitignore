@@ -13,20 +13,11 @@ with open("data2.txt") as f:
        (bar, c_num) = line.split()
        d2[bar] = int(c_num)
 
-def bar_l():
-    "gets the list of bars"
-    for key in d:
-        print key
-
 def bars(bar):
     "gets the bar price info. Type format : bars('Iron') " 
     a = ''
     if bar not in d:
-        if bar == 'All':
-            print 'The list of all bar prices: '
-            print d
-        else:
-            print 'That type of bar does not exist, please try again'
+        print 'That type of bar does not exist, please try again'
     else:
         a = d.get(bar)
         return 'The price of ' + str(bar) + ' bars are ' + str(a) + ' gold coins'
