@@ -42,7 +42,7 @@ def c_num(bar):
 
 def finditemidsource(nameid):
     """grabs source code"""
-    request = urllib2.Request("http://www.runelocus.com/tools/itemlist.html?name=" + nameid+"viewitem.ws?obj=")
+    request = urllib2.Request("http://www.runelocus.com/tools/itemlist.html?name=" + nameid+"&search=Search")
     response = urllib2.urlopen(request)
     html = response.read()
     startind = html.find("<tbody>")
@@ -65,8 +65,8 @@ def Webinfo(nameid, itemid):
 #http://services.runescape.com/m=itemdb_rs/results.ws     Just type in bar, ore and coal form the coresponding lists
 #http://services.runescape.com/m=itemdb_rs/Nature_rune/viewitem.ws?obj=561      EXXTRA nature rune price
 
-Calculation:
+#Calculation:
 
-Profit = bar price - (coal Price * amount of coal) + ore price [optional + nature rune price]
-XpGain = smelthing xp [optional + superheat cast xp , magic] 
+#Profit = bar price - (coal Price * amount of coal) + ore price [optional + nature rune price]
+#XpGain = smelthing xp [optional + superheat cast xp , magic] 
 
