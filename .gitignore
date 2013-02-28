@@ -42,9 +42,7 @@ def c_num(bar):
 
 
 #links for data:
-#http://services.runescape.com/m=itemdb_rs/results.ws      ore prices
-#http://services.runescape.com/m=itemdb_rs/results.ws      bar prices
-#http://services.runescape.com/m=itemdb_rs/results.ws      coal price
+#http://services.runescape.com/m=itemdb_rs/results.ws     Just type in bar, ore and coal form the coresponding lists
 #http://services.runescape.com/m=itemdb_rs/Nature_rune/viewitem.ws?obj=561      EXXTRA nature rune price
 
 
