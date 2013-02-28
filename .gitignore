@@ -55,10 +55,11 @@ def Webinfo(nameid, itemid):
     request = urllib2.Request("http://services.runescape.com/m=itemdb_rs/" + nameid+ "/" +"viewitem.ws?obj="+ itemid)
     response = urllib2.urlopen(request)
     html = response.read()
-    startind = html.find("<tbody>")
-    endind = html.find("</tbody>")
+    startind = html.find("<td>")
+    endind = html.find("</td>")
     iteminfo = html[startind:endind]
-    print iteminfo
+    price = iteminfo[4:]
+    print price
 
 
 #links for data:
