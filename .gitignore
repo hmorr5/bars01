@@ -1,3 +1,6 @@
+import urllib2
+import urllib
+
 d = {}
 with open("data.txt") as f:
     for line in f:
@@ -37,9 +40,25 @@ def c_num(bar):
         a = d2.get(bar)
         return 'The ' + str(bar) + ' bar requires ' + str(a) + ' coal per bar'
 
+def finditemidsource(nameid):
+    """grabs source code"""
+    request = urllib2.Request("http://www.runelocus.com/tools/itemlist.html?name=" + nameid+"viewitem.ws?obj=")
+    response = urllib2.urlopen(request)
+    html = response.read()
+    startind = html.find("<tbody>")
+    endind = html.find("</tbody>")
+    iteminfo = html[startind:endind]
+    print iteminfo
 
-
-
+def Webinfo(nameid, itemid):
+    """grabs source code"""
+    request = urllib2.Request("http://services.runescape.com/m=itemdb_rs/" + nameid+ "/" +"viewitem.ws?obj="+ itemid)
+    response = urllib2.urlopen(request)
+    html = response.read()
+    startind = html.find("<tbody>")
+    endind = html.find("</tbody>")
+    iteminfo = html[startind:endind]
+    print iteminfo
 
 
 #links for data:
