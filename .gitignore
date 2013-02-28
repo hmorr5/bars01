@@ -11,6 +11,7 @@ with open("data2.txt") as f:
        d2[bar] = int(c_num)
 
 def bar_l():
+    "gets the list of bars"
     for key in d:
         print key
 
@@ -28,7 +29,7 @@ def bars(bar):
         return 'The price of ' + str(bar) + ' bars are ' + str(a) + ' gold coins'
         
 def c_num(bar):
-    "gets the oreamount of coal needed"
+    "gets the amount of coal needed"
     a = ''
     if bar not in d2:
         print 'That type of bar does not require coal, please try again'
