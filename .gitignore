@@ -44,7 +44,7 @@ def c_num(bar):
 
 def fs(nameid):
    """grabs source code"""
-   crudelist = []
+   fileObj = open("data.txt", "w")
    clearstr = ""
    lastitem = ""
    cleartags = re.compile(r'<.*?>')
@@ -62,11 +62,8 @@ def fs(nameid):
          a = cleartags.sub('',iteminfo[trlist[num-1]: tr_endlist[num-1]])
          b = cleartags.sub('',iteminfo[trlist[num-2]: tr_endlist[num-2]])
          if a != lastitem:
-            crudelist.append(a+","+b)
-         lastitem = cleartags.sub('',iteminfo[trlist[num-1]: tr_endlist[num-1]])      
-   print crudelist
-   if crudelist == []:
-      print "this item type/product does not excist"
+            fileObj.write("{0},{1}\n".format(a, b))
+         lastitem = cleartags.sub('',iteminfo[trlist[num-1]: tr_endlist[num-1]]) 
 
 
       
