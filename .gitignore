@@ -2,11 +2,16 @@ import urllib2
 import urllib
 import re
 
+dt = {}
+
 d = {}
 with open("data.txt") as f:
     for line in f:
-       (bar, val) = line.split()
-       d[bar] = int(val)
+       (nameid, itemid) = line.split()
+       d[nameid] = itemid
+        
+       
+       
 
 d2 = {}
 with open("data2.txt") as f:
@@ -19,7 +24,7 @@ def bar_l():
     for key in d:
         print key
 
-def bars(bar):
+def bars(itemid):
     "gets the bar price info. Type format : bars('Iron') " 
     a = ''
     if bar not in d:
@@ -37,7 +42,7 @@ def c_num(bar):
         a = d2.get(bar)
         return 'The ' + str(bar) + ' bar requires ' + str(a) + ' coal per bar'
 
-def finditemidsource(nameid):
+def fs(nameid):
    """grabs source code"""
    crudelist = []
    clearstr = ""
@@ -62,16 +67,23 @@ def finditemidsource(nameid):
    print crudelist
    if crudelist == []:
       print "this item type/product does not excist"
+
+
       
-def Webinfo(nameid, itemid):
+def Webinfo(nameid):
     """grabs source code"""
+    itemid = d[nameid]
     request = urllib2.Request("http://services.runescape.com/m=itemdb_rs/" + nameid + "/" +"viewitem.ws?obj="+ itemid)
     response = urllib2.urlopen(request)
     html = response.read()
-    startind = html.find("<tbody>")
-    endind = html.find("</tbody>")
+    startind = html.find("<td>")
+    endind = html.find("</td>")
     iteminfo = html[startind:endind]
-    print iteminfo
+    price = iteminfo[4:]
+    dt.update({nameid:price})
+    print 'The price of ' + nameid + ' is currently ' + str(price) + ' coins. '
+
+
 
 
 #links for data:
