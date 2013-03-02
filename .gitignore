@@ -80,7 +80,22 @@ def Webinfo(nameid):
     dt.update({nameid:price})
     print 'The price of ' + nameid + ' is currently ' + str(price) + ' coins. '
 
-
+def Calc(nameid, superheat):
+    coalP = int(dt['Coal']) * ca
+    barP = int(dt[nameid])
+    natP = int(dt['Nature_rune'])
+    
+    if superheat == 'No':
+        profit = barP - coalP
+        print profit
+    elif superheat == 'Yes':
+        profit = barP - coalP - natP - oreP
+        print barP
+        print coalP
+        print natP
+        print profit
+    else:
+        print "Please enter Yes or No "
 
 
 #links for data:
