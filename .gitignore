@@ -1,16 +1,21 @@
+from Tkinter import *
+import math
 import urllib2
 import urllib
 import re
 
+root = Tk()     
+top = Frame(root)
+top.pack(side='top')
+
 dt = {}
+do = {}
 
 d = {}
 with open("data.txt") as f:
     for line in f:
        (nameid, itemid) = line.split()
        d[nameid] = itemid
-        
-       
        
 
 d2 = {}
@@ -18,6 +23,12 @@ with open("data2.txt") as f:
     for line in f:
        (bar, c_num) = line.split()
        d2[bar] = int(c_num)
+
+with open("data3.txt") as f:
+    for line in f:
+       (nameid, oreid) = line.split()
+       d[nameid] = oreid
+       
 
 def bar_l():
     "gets the list of bars"
@@ -77,26 +88,77 @@ def Webinfo(nameid):
     endind = html.find("</td>")
     iteminfo = html[startind:endind]
     price = iteminfo[4:]
+    price = price.replace(",", "")
     dt.update({nameid:price})
-    print 'The price of ' + nameid + ' is currently ' + str(price) + ' coins. '
+    print 'The price of '+ nameid + ' is currently ' + str(price) + ' coins. '
 
-def Calc(nameid, superheat):
+s = StringVar()
+
+rframe = Frame(top)
+rframe.pack(side='top', padx=10, pady=20)
+
+var = StringVar()
+c = Checkbutton(
+    rframe, text="Superheat?", variable=var,
+    onvalue="Yes", offvalue="No"
+    )
+c.pack(side='left')
+
+superheat = var.get()
+
+
+def Calc(nameid, oreid, superheat):
+    ca = int(d2[nameid])
     coalP = int(dt['Coal']) * ca
     barP = int(dt[nameid])
     natP = int(dt['Nature_rune'])
-    
+    oreP = int(dt[oreid])    
     if superheat == 'No':
-        profit = barP - coalP
+        profit = barP - coalP - oreP
         print profit
     elif superheat == 'Yes':
         profit = barP - coalP - natP - oreP
-        print barP
-        print coalP
-        print natP
         print profit
     else:
         print "Please enter Yes or No "
 
+def findO(nameid):
+    global oreid
+    oreid = do[nameid]
+    print oreid
+    
+
+
+
+r_entry = Label(rframe, textvariable=s)
+r_entry.pack(side='left')
+
+var = StringVar()
+var.set('Iron_bar')
+OptionMenu(root, var, 'Iron_Bar',"b","c").pack()
+nameid = var.get()
+ 
+
+def comp_s(event=None):
+    global s
+    s.set(bars('Gold'))
+
+
+r_entry.bind('<Return>', comp_s)
+
+compute = Button(rframe, text=' Gold ', command=Calc(nameid, oreid, superheat))
+compute.pack(side='left')
+
+
+
+def quit(event=None):
+    root.destroy()
+quit_button = Button(top, text='Goodbye, GUI World!', command=quit,
+                     background='yellow', foreground='blue')
+quit_button.pack(side='top', pady=5, fill='x')
+root.bind('<q>', quit)
+
+root.mainloop()
 
 #links for data:
 #http://services.runescape.com/m=itemdb_rs/results.ws     Just type in bar, ore and coal form the coresponding lists
